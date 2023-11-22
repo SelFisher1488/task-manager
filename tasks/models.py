@@ -15,7 +15,7 @@ class Position(models.Model):
 
 
 class Worker(AbstractUser):
-    position = models.ForeignKey(Position, on_delete=models.CASCADE)
+    position = models.ForeignKey(Position, on_delete=models.CASCADE, default=1)
 
     class Meta:
         ordering = ["username"]
@@ -40,26 +40,19 @@ class Task(models.Model):
         ("high", "High"),
         ("medium", "Medium"),
         ("low", "Low"),
-        ("optional", "Optional")
+        ("optional", "Optional"),
     )
+
     name = models.CharField(max_length=255)
     description = models.TextField()
     deadline = models.DateField()
     is_completed = models.BooleanField()
-    priority = models.CharField(
-        max_length=255,
-        choices=PRIORITY_CHOICES,
-        default="low"
-    )
+    priority = models.CharField(max_length=255, choices=PRIORITY_CHOICES, default="low")
     task_type = models.ForeignKey(TaskType, on_delete=models.CASCADE)
-    assignees = models.ManyToManyField(
-        AUTH_USER_MODEL,
-        related_name="tasks"
-    )
+    assignees = models.ManyToManyField(AUTH_USER_MODEL, related_name="tasks")
 
     class Meta:
-        ordering = ["name"]
+        ordering = ["deadline"]
 
     def __str__(self) -> str:
         return f"{self.name} better to do by:{self.deadline}"
-
