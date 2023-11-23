@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.urls import reverse
@@ -51,12 +53,16 @@ class Task(models.Model):
     description = models.TextField()
     deadline = models.DateField()
     is_completed = models.BooleanField()
+    complete_date = models.DateField(null=True, blank=True)
     priority = models.CharField(max_length=255, choices=PRIORITY_CHOICES, default="4")
     task_type = models.ForeignKey(TaskType, on_delete=models.CASCADE)
-    assignees = models.ManyToManyField(AUTH_USER_MODEL, related_name="tasks")
+    assignees = models.ManyToManyField(AUTH_USER_MODEL, related_name="tasks", blank=True)
 
     class Meta:
         ordering = ["deadline"]
 
     def __str__(self) -> str:
         return f"{self.name} better to do by: {self.deadline}"
+
+    def check_deadline(self):
+        return self.deadline >= datetime.now().date()

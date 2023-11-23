@@ -3,6 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
+from django.utils import timezone
 from django.views import generic
 
 from tasks.forms import TaskForm
@@ -44,6 +45,7 @@ def assign_to_task(request, pk) -> HttpResponseRedirect:
 def mark_completed(request, pk) -> HttpResponseRedirect:
     task = Task.objects.get(id=pk)
     task.is_completed = True
+    task.complete_date = timezone.now()
     task.save()
     return HttpResponseRedirect(reverse_lazy("tasks:task-list"))
 
