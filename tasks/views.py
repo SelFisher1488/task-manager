@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 
+from tasks.forms import TaskForm
 from tasks.models import Worker, Task, Position, TaskType
 
 
@@ -39,6 +40,14 @@ def assign_to_task(request, pk) -> HttpResponseRedirect:
     return HttpResponseRedirect(reverse_lazy("tasks:task-detail", args=[pk]))
 
 
+@login_required
+def mark_completed(request, pk) -> HttpResponseRedirect:
+    task = Task.objects.get(id=pk)
+    task.is_completed = True
+    task.save()
+    return HttpResponseRedirect(reverse_lazy("tasks:task-list"))
+
+
 class TaskListView(LoginRequiredMixin, generic.ListView):
     model = Task
 
@@ -48,10 +57,24 @@ class TaskDetailView(LoginRequiredMixin, generic.DetailView):
     queryset = Task.objects.all().prefetch_related("assignees")
 
 
+class TaskTypeListView(LoginRequiredMixin, generic.ListView):
+    model = TaskType
+    context_object_name = "task_type_list"
+    template_name = "tasks/task_type_list.html"
+
+
 class TaskCreateView(LoginRequiredMixin, generic.CreateView):
     model = Task
-    fields = "__all__"
+    form_class = TaskForm
     success_url = reverse_lazy("tasks:task-list")
+
+
+class TaskUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Task
+    form_class = TaskForm
+
+    def get_success_url(self):
+        return reverse_lazy("tasks:task-detail", args=[self.object.pk])
 
 
 class WorkerListView(LoginRequiredMixin, generic.ListView):
@@ -61,8 +84,3 @@ class WorkerListView(LoginRequiredMixin, generic.ListView):
 class PositionListView(LoginRequiredMixin, generic.ListView):
     model = Position
 
-
-class TaskTypeListView(LoginRequiredMixin, generic.ListView):
-    model = TaskType
-    context_object_name = "task_type_list"
-    template_name = "tasks/task_type_list.html"
