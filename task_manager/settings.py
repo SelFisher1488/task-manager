@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "crispy_forms",
+    "crispy_bootstrap4",
     "tasks",
 ]
 
@@ -126,3 +128,9 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "tasks.Worker"
 
 LOGIN_REDIRECT_URL = "/"
+
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
+CRISPY_TEMPLATE_PACK = "bootstrap4"

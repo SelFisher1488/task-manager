@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>
+    {{ task.name }}
+  </h1>
+  <p>Task type: {{ task.task_type }}</p>
+  <p>What we are doing?</p>
+  <p>{{ task.description }}</p>
+  <h1>
+    Workers assigned to this task:
+
+    {% if task in user.tasks.all %}
+      <a href="{% url 'tasks:task-assign' pk=task.id %}" class="btn btn-danger link-to-page">
+        Delete me from this task
+      </a>
+    {% else %}
+      <a href="{% url 'tasks:task-assign' pk=task.id %}" class="btn btn-success link-to-page">
+        Assign me from this task
+      </a>
+    {% endif %}
+
+  </h1>
+  <hr>
+  <ul>
+    {% for worker in task.assignees.all %}
+      <li>{{ worker.username }} ({{ worker.first_name }} {{ worker.last_name }})</li>
+    {% endfor %}
+  </ul>
+
+{% endblock %}

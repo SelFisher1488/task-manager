@@ -1,14 +1,36 @@
 {% extends "base.html" %}
 {% block content %}
-  <h1>Tasks to do</h1>
+  <h1>Tasks to do
+  <a href="{% url 'tasks:task-create' %}" class="btn btn-primary link-to-page">
+    Create
+  </a>
+  </h1>
   {% if task_list %}
-    <ul>
-      {% for task in tasks %}
-        <li>
-          <p>{{ task.id }} {{ task.name }} {{ task.deadline }}</p>
-        </li>
-      {% endfor %}
-    </ul>
+    <table class="table">
+      <tr>
+        <th>ID</th>
+        <th>Task name</th>
+        <th>Deadline</th>
+        <th>Status</th>
+        <th>Priority</th>
+      </tr>
+    {% for task in task_list %}
+      <tr>
+        <td>{{ task.id }}</td>
+        <td><a href="{% url "tasks:task-detail" task.id %}">{{ task.name }}</a></td>
+        <td>{{ task.deadline }}</td>
+        <td>
+          {% if task.is_completed %}
+            Completed
+          {% else %}
+            In progress
+          {% endif %}
+        </td>
+        <td>{{ task.priority }}</td>
+      </tr>
+    {% endfor %}
+    </table>
+  {% else %}
+    <p>There are no task.</p>
   {% endif %}
 {% endblock %}
-
