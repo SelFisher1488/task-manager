@@ -52,17 +52,24 @@ def mark_completed(request, pk) -> HttpResponseRedirect:
 
 class TaskListView(LoginRequiredMixin, generic.ListView):
     model = Task
-
-
-class TaskDetailView(LoginRequiredMixin, generic.DetailView):
-    model = Task
-    queryset = Task.objects.all().prefetch_related("assignees")
+    paginate_by = 5
 
 
 class TaskTypeListView(LoginRequiredMixin, generic.ListView):
     model = TaskType
     context_object_name = "task_type_list"
     template_name = "tasks/task_type_list.html"
+
+
+class TaskTypeUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = TaskType
+    fields = "__all__"
+    success_url = reverse_lazy("task:tasktype-list")
+
+
+class TaskDetailView(LoginRequiredMixin, generic.DetailView):
+    model = Task
+    queryset = Task.objects.all().prefetch_related("assignees")
 
 
 class TaskCreateView(LoginRequiredMixin, generic.CreateView):
@@ -81,6 +88,12 @@ class TaskUpdateView(LoginRequiredMixin, generic.UpdateView):
 
 class WorkerListView(LoginRequiredMixin, generic.ListView):
     model = Worker
+    paginate_by = 5
+
+
+class WorkerDetailView(LoginRequiredMixin, generic.DetailView):
+    model = Worker
+    queryset = Worker.objects.all().prefetch_related("tasks")
 
 
 class PositionListView(LoginRequiredMixin, generic.ListView):

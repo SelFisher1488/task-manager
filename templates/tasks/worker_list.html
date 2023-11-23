@@ -2,12 +2,25 @@
 {% block content %}
   <h1>Workers who works in our team</h1>
   {% if worker_list %}
-    <ul>
-      {% for worker in worker_list %}
-        <li>
-          <p>{{ worker.id }} {{ worker.username }} {{ worker.position }}</p>
-        </li>
-      {% endfor %}
-    </ul>
+    <table class="table">
+      <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Position</th>
+      </tr>
+    {% for worker in worker_list %}
+      <tr>
+        <td>{{ worker.id }}</td>
+        <td><a href="{{ worker.get_absolute_url }}">{{ worker.username }} {% if user == worker %} (Me){% endif %}</a></td>
+        <td>{{ worker.first_name }}</td>
+        <td>{{ worker.last_name }}</td>
+        <td>{{ worker.position }}</td>
+      </tr>
+    {% endfor %}
+    </table>
+  {% else %}
+    <p>There is no workers in here.</p>
   {% endif %}
 {% endblock %}

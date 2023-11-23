@@ -13,11 +13,6 @@ class TaskForm(forms.ModelForm):
         required=False,
     )
 
-    def clean_deadline(self):
-        if self.cleaned_data["deadline"] < datetime.now().date():
-            raise ValidationError("Deadline can not be assigned earlier than today")
-        return self.cleaned_data["deadline"]
-
     class Meta:
         model = Task
         fields = (
@@ -29,3 +24,9 @@ class TaskForm(forms.ModelForm):
             "task_type",
             "assignees"
         )
+
+    def clean_deadline(self):
+        if self.cleaned_data["deadline"] < datetime.now().date():
+            raise ValidationError("Deadline can not be assigned earlier than today")
+        return self.cleaned_data["deadline"]
+

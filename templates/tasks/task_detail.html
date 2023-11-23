@@ -1,8 +1,6 @@
 {% extends "base.html" %}
 {% load crispy_forms_filters %}
-{% load tz %}
 {% block content %}
-{% now "Y-m-d" as current_date %}
   <h1>
     {{ task.name }}
     <a href="{% url 'tasks:task-update' pk=task.id %}" class="btn btn-secondary link-to-page">
@@ -21,7 +19,7 @@
     <strong>Status:</strong>
     {% if task.is_completed %}
       {% if task.check_deadline %}
-        <p>Completed</p>
+        <p class="text-success">Completed</p>
       {% else %}
         <p class="text-danger">Completed after deadline</p>
       {% endif %}
@@ -53,7 +51,7 @@
   <hr>
   <ul>
     {% for worker in task.assignees.all %}
-      <li>{{ worker.username }} ({{ worker.first_name }} {{ worker.last_name }})</li>
+      <li><a href="{{ worker.get_absolute_url }}">{{ worker.username }}</a> ({{ worker.first_name }} {{ worker.last_name }})</li>
     {% endfor %}
   </ul>
 

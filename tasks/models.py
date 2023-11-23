@@ -51,7 +51,7 @@ class Task(models.Model):
 
     name = models.CharField(max_length=255)
     description = models.TextField()
-    deadline = models.DateField()
+    deadline = models.DateField(null=True, blank=True)
     is_completed = models.BooleanField()
     complete_date = models.DateField(null=True, blank=True)
     priority = models.CharField(max_length=255, choices=PRIORITY_CHOICES, default="4")
