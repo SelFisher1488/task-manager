@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+{% block content %}
+  <h1>
+    {{ worker.username }}
+    <a href="{% url 'tasks:worker-delete' pk=worker.id %}" class="btn btn-danger link-to-page">
+      Delete
+    </a>
+    <a href="{% url 'tasks:worker-update' pk=worker.id %}" class="btn btn-secondary link-to-page">
+      Update
+    </a>
+  </h1>
+  <p><strong>Worker position:</strong> {{ worker.position }}</p>
+  <p><strong>First name:</strong> {{ worker.first_name }}</p>
+  <p><strong>Last name:</strong> {{ worker.last_name }}</p>
+  <h4>
+    Tasks assigned to this worker:
+  </h4>
+  <br>
+  <p><strong>Completed tasks</strong></p>
+    <ul>
+      {% for task in worker.tasks.all %}
+        {% if task.is_completed %}
+          <hr>
+          <p><strong>Task name: </strong><a href="{% url 'tasks:task-detail' task.id %}">{{ task.name }}</a></p>
+          <p><strong>Deadline of task: </strong>{{ task.deadline }}</p>
+          <p><strong>Status of task: </strong>
+            {% if task.check_deadline %}
+              Completed in time
+            {% else %}
+              Completed after deadline
+            {% endif %}
+          </p>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  <p><strong>Tasks being worked on</strong></p>
+    <ul>
+      {% for task in worker.tasks.all %}
+        {% if not task.is_completed %}
+          <hr>
+          <p><strong>Task name: </strong><a href="{% url 'tasks:task-detail' task.id %}">{{ task.name }}</a></p>
+          <p><strong>Deadline of task: </strong>{{ task.deadline }}</p>
+          <p><strong>Status of task: </strong>
+            {% if task.check_deadline %}
+              In progress
+            {% else %}
+              In progress (skipped deadline)
+            {% endif %}
+          </p>
+        {% endif %}
+      {% endfor %}
+    </ul>
+
+{% endblock %}
