@@ -7,7 +7,7 @@ Task Manager is a custom-built task management system designed to streamline col
 - [Features](#features)
 - [Requirements](#requirements)
 - [Getting Started](#getting-started)
-- [Contributing](#contributing)
+- [How to Contribute](#how-to-contribute)
 
 ## Features
 
