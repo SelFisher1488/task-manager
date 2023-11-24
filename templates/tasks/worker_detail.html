@@ -3,7 +3,10 @@
 {% block content %}
   <h1>
     {{ worker.username }}
-    <a href="{% url 'tasks:task-update' pk=worker.id %}" class="btn btn-secondary link-to-page">
+    <a href="{% url 'tasks:worker-delete' pk=worker.id %}" class="btn btn-danger link-to-page">
+      Delete
+    </a>
+    <a href="{% url 'tasks:worker-update' pk=worker.id %}" class="btn btn-secondary link-to-page">
       Update
     </a>
   </h1>
