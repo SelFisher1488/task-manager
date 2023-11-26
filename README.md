@@ -4,10 +4,17 @@ Task Manager is a custom-built task management system designed to streamline col
 ## The content
 
 
+- [Check it out!](#check-it-out!)
 - [Features](#features)
 - [Requirements](#requirements)
 - [Getting Started](#getting-started)
 - [How to Contribute](#how-to-contribute)
+- [Website interface](#wedsite-interface)
+
+
+## Check it out!
+
+[Task manager deployed to Render]()
 
 ## Features
 
@@ -74,6 +81,7 @@ Contributions are welcome! To contribute, follow these steps:
 - If you load data from prepared file, you can use prepared admin user:
   - Login: "admin"
   - Password: "admin"
+
 
 Feel free to add new data and exploit admin panel by your wishes.
 
