@@ -4,12 +4,11 @@ Task Manager is a custom-built task management system designed to streamline col
 ## The content
 
 
-- [Check it out!](#check-it-out!)
+- [Check it out!](#check-it-out)
 - [Features](#features)
 - [Requirements](#requirements)
 - [Getting Started](#getting-started)
-- [How to Contribute](#how-to-contribute)
-- [Website interface](#wedsite-interface)
+- [Contribute](#contribute)
 
 
 ## Check it out!
@@ -56,27 +55,8 @@ Open a web browser and go to http://127.0.0.1:8000/ to access the Task Manager a
 - Monitor the task process
 - Extend existing positions, task types
 
-## How to Contribute
+## Contribute
 Contributions are welcome! To contribute, follow these steps:
-
-- **Fork the repository:** Click the "Fork" button on the top right corner of this repository's page.
-
-- **Clone your fork:** Clone the repository to your local machine using the following command:
-   ```bash
-  git clone https://github.com/SelFisher1488/task-manager.git
-- **Create Your Feature Branch:** Start working on a new feature by creating a dedicated branch. Choose a descriptive name for the branch, such as feature/YourFeature:
-   ```bash
-  git checkout -b feature/YourFeature
-- **Commit Your Changes:** Make your desired changes to the codebase and commit them:
-   ```bash
-   git add .
-   git commit -m "name your commit"
-
-- **Push To The Branch:** Push your changes to your fork on GitHub:
-   ```bash
-  git push origin feature/YourFeature
-
-- **Create A New Pull Request:** Go to the original repository on GitHub and click on the "New Pull Request" button. Provide details about your changes and submit the pull request for review.
 
 - If you load data from prepared file, you can use prepared admin user:
   - Login: "admin"
