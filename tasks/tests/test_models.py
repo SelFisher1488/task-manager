@@ -42,7 +42,9 @@ class ModelsTest(TestCase):
         self.assertEqual(str(self.task_type), "testt")
 
     def test_task_str(self):
-        self.assertEqual(str(self.task), f"tesk better to do by: {self.task.deadline}")
+        self.assertEqual(
+            str(self.task), f"tesk better to do by: {self.task.deadline}"
+        )
 
     def test_position_str(self):
         self.assertEqual(str(self.position), "testpos")

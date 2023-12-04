@@ -5,8 +5,6 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.urls import reverse
 
-from task_manager.settings import AUTH_USER_MODEL
-
 
 class Position(models.Model):
     name = models.CharField(max_length=255, unique=True)
@@ -25,7 +23,9 @@ class Worker(AbstractUser):
         ordering = ["username"]
 
     def __str__(self) -> str:
-        return f"{self.first_name} {self.last_name} (position: {self.position})"
+        return (
+            f"{self.first_name} {self.last_name} (position: {self.position})"
+        )
 
     def get_absolute_url(self):
         return reverse("tasks:worker-detail", kwargs={"pk": self.pk})
@@ -54,9 +54,13 @@ class Task(models.Model):
     description = models.TextField()
     deadline = models.DateField(null=True, blank=True)
     is_completed = models.BooleanField(default=False)
-    priority = models.CharField(max_length=255, choices=PRIORITY_CHOICES, default="4")
+    priority = models.CharField(
+        max_length=255, choices=PRIORITY_CHOICES, default="4"
+    )
     task_type = models.ForeignKey(TaskType, on_delete=models.CASCADE)
-    assignees = models.ManyToManyField(get_user_model(), related_name="tasks", blank=True)
+    assignees = models.ManyToManyField(
+        get_user_model(), related_name="tasks", blank=True
+    )
 
     class Meta:
         ordering = ["deadline"]
