@@ -21,13 +21,13 @@
   <div>
     <strong>Status:</strong>
     {% if task.is_completed %}
-      {% if task.check_deadline %}
+      {% if task.before_deadline %}
         <p class="text-success">Completed</p>
       {% else %}
         <p class="text-danger">Completed after deadline</p>
       {% endif %}
     {% else %}
-      {% if task.check_deadline %}
+      {% if task.before_deadline %}
         <p>In progress</p>
       {% else %}
         <p class="text-danger">In progress (skipped deadline)</p>

@@ -68,5 +68,5 @@ class Task(models.Model):
     def __str__(self) -> str:
         return f"{self.name} better to do by: {self.deadline}"
 
-    def check_deadline(self):
+    def before_deadline(self):
         return self.deadline >= datetime.now().date()
