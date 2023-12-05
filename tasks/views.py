@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse, HttpResponseRedirect
@@ -6,8 +7,20 @@ from django.urls import reverse_lazy
 from django.utils import timezone
 from django.views import generic
 
-from tasks.forms import TaskForm, TaskTypeSearchForm, TaskSearchForm, WorkerSearchForm, PositionSearchForm, WorkerForm
-from tasks.models import Worker, Task, Position, TaskType
+from tasks.forms import (
+    TaskForm,
+    TaskSearchForm,
+    TaskTypeSearchForm,
+    WorkerForm,
+    WorkerSearchForm,
+    PositionSearchForm,
+)
+from tasks.models import (
+    Worker,
+    Task,
+    TaskType,
+    Position,
+)
 
 
 @login_required
@@ -147,7 +160,6 @@ class WorkerListView(LoginRequiredMixin, generic.ListView):
     model = Worker
     paginate_by = 5
 
-
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(WorkerListView, self).get_context_data(**kwargs)
         username = self.request.GET.get("username", "")
@@ -159,7 +171,7 @@ class WorkerListView(LoginRequiredMixin, generic.ListView):
         return context
 
     def get_queryset(self):
-        queryset = Worker.objects.all()
+        queryset = Worker.objects.select_related("position")
         username = self.request.GET.get("username")
         if username:
             return queryset.filter(username__icontains=username)
@@ -167,18 +179,18 @@ class WorkerListView(LoginRequiredMixin, generic.ListView):
 
 
 class WorkerDetailView(LoginRequiredMixin, generic.DetailView):
-    model = Worker
-    queryset = Worker.objects.all().prefetch_related("tasks")
+    model = get_user_model()
+    queryset = Worker.objects.prefetch_related("tasks")
 
 
 class WorkerCreateView(LoginRequiredMixin, generic.CreateView):
-    model = Worker
+    model = get_user_model()
     form_class = WorkerForm
     success_url = reverse_lazy("tasks:worker-list")
 
 
 class WorkerUpdateView(LoginRequiredMixin, generic.UpdateView):
-    model = Worker
+    model = get_user_model()
     fields = (
         "username",
         "first_name",
@@ -190,7 +202,7 @@ class WorkerUpdateView(LoginRequiredMixin, generic.UpdateView):
 
 
 class WorkerDeleteView(LoginRequiredMixin, generic.DeleteView):
-    model = Worker
+    model = get_user_model()
     success_url = reverse_lazy("tasks:worker-list")
 
 
